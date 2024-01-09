@@ -33,8 +33,8 @@ exports.getServiceById = async (req, res) => {
 
 exports.newService = async (req, res) => {
     try{
-        const{nombre, precio,descripcion,telefono,img,vendedor}=req.body;
-        const newService = new Service({nombre,precio,descripcion,telefono,img,vendedor});
+        const{nombre, precio,descripcion,telefono,img,vendedor,email}=req.body;
+        const newService = new Service({nombre,precio,descripcion,telefono,img,vendedor,email});
         await newService.save();
         return res.status(201).json({
             message: 'Servicio creado con exito',
@@ -68,7 +68,7 @@ exports.updateService = async (req, res) => {
 exports.deleteService = async (req, res) => {
     const serviceId = req.params.serviceId;
     try {
-        await Service.findByIdAndRemove(serviceId);
+        await Service.findOneAndDelete({_id: serviceId});
         return res.status(200).json({
             message: 'Servicio eliminado con exito'
         });

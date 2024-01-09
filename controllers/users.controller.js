@@ -66,6 +66,7 @@ exports.loginUser=async(req, res)=> {
             return res.json({
                 user: formatUser,
                 token: token,
+                userEmail: user.email,
                 action: 'login'
             });
         }).catch(error=>{
@@ -76,3 +77,22 @@ exports.loginUser=async(req, res)=> {
         res.status(500).json({error: 'Error al iniciar sesión'});
     }
 };
+
+    exports.deleteUser=async(req, res)=> {
+        const userId = req.params.userId;
+        try {
+            await User.findOneAndDelete({_id: userId});
+            return res.status(200).json(
+                {
+                    message: 'Usuario eliminado con exito'
+                }
+            );
+        } catch (error) {
+            return res.status(500).json(
+                {
+                    error: 'Error al eliminar usuario',
+                    data: error
+                }
+            );
+        }
+    }

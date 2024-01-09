@@ -34,6 +34,10 @@ exports.getStudentById = async (req, res) => {
 exports.newStudent = async (req, res) => {
     try{
         const{noControl,email}=req.body;
+        const existingStudent = await Student.findOne({email});
+        if(existingStudent){
+            return res.status(400).json({error: 'El usuario ya existe'});
+        }
         const newStudent = new Student({noControl,email});
         await newStudent.save();
         return res.status(201).json({
@@ -68,7 +72,7 @@ exports.updateStudent = async (req, res) => {
 exports.deleteStudent = async (req, res) => {
     const studentId = req.params.studentId;
     try {
-        await Student.findByIdAndRemove(studentId);
+        await Student.findOneAndDelete({_id: studentId});
         return res.status(200).json({
             message: 'Estudiante eliminado con exito'
         });

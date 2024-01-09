@@ -7,7 +7,11 @@ const servicesRouter = require('./routers/services.router');
 const studentsRouter = require('./routers/students.router');
 require('./utils/mongoConnection');
 const app = express();
-const port = 3003;
+//Para problemas de politicas CORS
+const cors = require('cors');
+const port = process.env.PORT || 3003;
+
+app.use(cors());
 
 //Solicitudes entrantes
 app.use(morgan('dev'));

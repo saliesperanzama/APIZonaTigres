@@ -33,8 +33,8 @@ exports.getProductById = async (req, res) => {
 
 exports.newProduct = async (req, res) => {
     try{
-        const{nombre, precio,descripcion,telefono,img,vendedor}=req.body;
-        const newProduct = new Product({nombre,precio,descripcion,telefono,img,vendedor});
+        const{nombre, precio,descripcion,telefono,img,vendedor,email}=req.body;
+        const newProduct = new Product({nombre,precio,descripcion,telefono,img,vendedor,email});
 
         await newProduct.save();
         return res.status(200).json({
@@ -69,7 +69,7 @@ exports.updateProduct = async (req, res) => {
 exports.deleteProduct = async (req, res) => {
     const productId = req.params.productId;
     try {
-        await Product.findByIdAndRemove(productId);
+        await Product.findOneAndDelete({_id: productId});
         return res.status(200).json({
             message: 'Producto eliminado con exito'
         });

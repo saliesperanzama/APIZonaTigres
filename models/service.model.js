@@ -6,7 +6,8 @@ let serviceSchema = new mongose.Schema({
     descripcion: {type:String},
     telefono: {type:Number},
     img: {type:String},
-    vendedor: {type:String}
+    vendedor: {type:String},
+    email: {type:String}
 });
 //Modelo para el servicio y exportarlo
 module.exports = mongose.model('Service', serviceSchema, 'service');
